@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\CustomAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserInfoController;
@@ -25,16 +26,16 @@ Route::get('/delete-user/{id}',[UserInfoController::class, 'deleteUser'])->name(
 
 // check middleware
 
-// Route::get('age/{age}',[UserInfoController::class,'checkAge'])->middleware('age:18');
-Route::get('age/{age}',[UserInfoController::class,'checkAge'])->middleware(['web','age:18']);
+Route::get('age/{age}',[UserInfoController::class,'checkAge'])->middleware('check.age:18');
 
-//Custom authentication
-Route::get('dashboard', [CustomAuthController::class, 'dashboard'])->name('dashboard'); 
-Route::get('login', [CustomAuthController::class, 'index'])->name('login');
-Route::post('submit-login', [CustomAuthController::class, 'submitLogin'])->name('login.custom'); 
-Route::get('registration', [CustomAuthController::class, 'registration'])->name('register.user');
-Route::post('submit-registration', [CustomAuthController::class, 'submitRegistration'])->name('register.custom'); 
-Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
+// custom authentication
+Route::get('login',[AuthController::class,'loginForm'])->name('login');
+Route::get('registation',[AuthController::class,'registationForm'])->name('registation');
+Route::post('registation',[AuthController::class,'UserRegistationFormSubmit'])->name('user.resgistration');
+Route::post('login',[AuthController::class,'UserLoginFormSubmit'])->name('user.login');
+Route::get('dashboard',[AuthController::class,'dashboard'])->name('dashboard');
+Route::get('logout',[AuthController::class,'logout'])->name('logout');
+
 
 
 

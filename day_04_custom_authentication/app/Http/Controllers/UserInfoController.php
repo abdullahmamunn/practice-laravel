@@ -81,7 +81,7 @@ class UserInfoController extends Controller
             $user->update($data);
         //  return $user->name;
         // $user->save();
-        return redirect()->route('show.data',['name' => $user->name]);
+        return redirect()->route('show.data',['id' => $user->id]);
     }
 
     public function deleteUser($id)

@@ -29,7 +29,7 @@
       </thead>
       <tbody>
         @foreach ($users as $user)
-        <tr class="{{$user->name === request()->name ? 'bg-success text-white' : ''}}">
+        <tr class="{{$user->id == request()->id ? 'bg-success text-white' : ''}}">
           <td>{{$loop->iteration}}</td>
           <td>{{$user->name}}</td>
           <td>{{$user->email}}</td>
