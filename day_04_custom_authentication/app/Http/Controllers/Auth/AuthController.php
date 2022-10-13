@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\CssSelector\Node\FunctionNode;
+
 
 class AuthController extends Controller
 {
@@ -43,17 +43,29 @@ class AuthController extends Controller
 
     public function UserLoginFormSubmit(Request $request)
     {
+        // return $request->all();
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
+        // dd(Auth::guard('user_info')->attempt($request->only(['email','password'])));
+  if(Auth::guard('user_info')->attempt($request->only(['email','password']))){
+    // echo "ok";
+    // die();
+    // dd();
+    return redirect()->intended('dashboard');
 
-       $user_credentials = $request->only('email','password');
+  }
+    //    $user_credentials = $request->only('email','password');
+    //    if (Auth::guard('user_info')->attempt($request->only(['email','password']))){
+    //     return redirect()->intended('dashboard');
+    // }
+    // return 
 
-       if(Auth::attempt($user_credentials)){
-           return redirect()->route('dashboard');
-       }
-       return redirect()->back();
+    //    if(Auth::attempt($user_credentials)){
+    //        return redirect()->route('dashboard')->with('success','Login successfull, Mr.');
+    //    }
+       return redirect()->back()->with('error','Your credential doesnot match');
         
     }
     

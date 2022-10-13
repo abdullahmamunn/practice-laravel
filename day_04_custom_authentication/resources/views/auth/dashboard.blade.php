@@ -1,10 +1,12 @@
 @extends('auth.app')
 @section('content')
 <div class="container">
-    @if(session('success'))
-    <h1>{{session('success')}}</h1>
+    @if(Session::has('success'))
+    <div class="alert alert-success" role="alert">
+        {{Session::get('success')}} {{auth()->user()->name}}
+    </div> 
     @endif
     <h1>Dashboard</h1>
-    <b>Welcome, {{auth()->user()->name}}</b>
+    <b>Welcome, {{Auth::guard('user_info')->user()->name}}</b>
 </div>
 @endsection

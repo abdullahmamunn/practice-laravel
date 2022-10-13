@@ -29,12 +29,19 @@ Route::get('/delete-user/{id}',[UserInfoController::class, 'deleteUser'])->name(
 Route::get('age/{age}',[UserInfoController::class,'checkAge'])->middleware('check.age:18');
 
 // custom authentication
-Route::get('login',[AuthController::class,'loginForm'])->name('login');
-Route::get('registation',[AuthController::class,'registationForm'])->name('registation');
+
 Route::post('registation',[AuthController::class,'UserRegistationFormSubmit'])->name('user.resgistration');
 Route::post('login',[AuthController::class,'UserLoginFormSubmit'])->name('user.login');
+
 Route::get('dashboard',[AuthController::class,'dashboard'])->name('dashboard');
-Route::get('logout',[AuthController::class,'logout'])->name('logout');
+Route::middleware(['AuthCheck'])->group(function () {
+    Route::get('login',[AuthController::class,'loginForm'])->name('login');
+    Route::get('registation',[AuthController::class,'registationForm'])->name('registation');
+    // Route::get('dashboard',[AuthController::class,'dashboard'])->name('dashboard');
+    Route::get('/show-data',[UserInfoController::class, 'getData'])->name('show.data');
+    Route::get('logout',[AuthController::class,'logout'])->name('logout');
+});
+
 
 
 
